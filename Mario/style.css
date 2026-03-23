@@ -80,3 +80,15 @@
         right: 100%;
     }
 }
+
+.score {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    color: white;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    z-index: 10;
+    pointer-events: none;
+}
