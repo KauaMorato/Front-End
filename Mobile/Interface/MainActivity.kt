@@ -1,4 +1,4 @@
-package com.seuapp.ecommercelogin  // ← mude para o pacote do seu projeto
+package com.seuapp.ecommercelogin
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -38,7 +38,7 @@ fun LoginScreen() {
     ) {
         // Logo / Título
         Text(
-            text = "🛒 E-Commerce",
+            text = "E-Commerce",
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.primary
         )
