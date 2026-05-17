@@ -1,0 +1,9 @@
+#menu {
+    display: nome;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#menu.active {
+    display: flex;
+}
