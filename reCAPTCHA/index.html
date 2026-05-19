@@ -36,7 +36,7 @@
         .info-section table { margin-right: 20px; }
         .info-section ul li { padding: 0; }
 
-        /* Tabela de Horários */
+        /* Tabela dos Horários */
         .sched-wrapper { border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
         .sched-table { border-collapse: collapse; font-size: 14px; min-width: 340px; }
         .sched-table th {
@@ -50,7 +50,7 @@
         .sched-row.active td { color: #3c4db5; }
         .detail-row td { padding: 0 !important; }
         
-        /* Painel de Detalhes */
+        /* Painel com os Detalhes */
         .detail-panel { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
         .detail-panel.open { max-height: 120px; }
         .detail-inner {
@@ -61,7 +61,7 @@
         .detail-stat .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: #999; }
         .detail-stat .stat-value { font-size: 15px; font-weight: 500; color: #333; }
 
-        /* Componentes Visuais */
+        /* Visual da página */
         .sched-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
         .badge-green { background: #e6f4ea; color: #2d7a3a; }
         .badge-amber { background: #fff3e0; color: #b45309; }
@@ -102,7 +102,7 @@
                 });
             });
 
-            // Inicialização simples para Botões, Tabelas estáticas e Listas
+            // Inicialização para Botões, Tabelas estáticas e Listas
             document.querySelectorAll('button').forEach(btn => btn.classList.add('mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--colored'));
             document.querySelectorAll('table').forEach(t => {
                 t.classList.add('mdl-data-table', 'mdl-js-data-table');
@@ -225,7 +225,7 @@
                     renderSched();
                 });
 
-                // Linha de Detalhes
+                // Linha dos Detalhes
                 const detailTr = document.createElement('tr');
                 detailTr.className = 'detail-row';
                 detailTr.innerHTML = `
