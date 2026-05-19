@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -11,292 +11,108 @@
     <link rel="stylesheet" href="https://rawgit.com/MEYVN-digital/mdl-selectfield/master/mdl-selectfield.min.css">
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script defer src="https://rawgit.com/MEYVN-digital/mdl-selectfield/master/mdl-selectfield.min.js"></script>
-
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
-        body {
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        body, form { display: flex; justify-content: center; align-items: center; }
+        body { padding: 20px; width: 100%; box-sizing: border-box; }
+        
         form {
-            width: 50%;
-            box-shadow: 1px 2px 4px grey;
-            border-radius: 5px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            padding: 32px;
-            text-align: center;
+            width: 50%; box-shadow: 1px 2px 4px grey; border-radius: 5px;
+            flex-wrap: wrap; padding: 32px; text-align: center;
         }
 
-        #my-textarea {
-            transform: translateY(-2px);
+        .left-side, .right-side, .info-section>*, .sched-wrapper, .info-section table {
+            display: inline-block; vertical-align: top;
         }
 
-        .left-side {
-            margin-right: 20px;
-            display: inline-block;
-        }
+        .left-side { margin-right: 20px; }
+        .left-side div { display: block; }
+        .left-side fieldset { margin: 20px 0; }
+        .left-side fieldset label { padding-right: 20px; }
+        #my-textarea { transform: translateY(-2px); }
+        .toolbar-section { width: 100%; margin-top: 50px; }
+        .info-section { margin: 15px 0; }
+        .info-section table { margin-right: 20px; }
+        .info-section ul li { padding: 0; }
 
-        .left-side div {
-            display: block;
-        }
-
-        .left-side fieldset {
-            margin: 20px 0;
-        }
-
-        .left-side fieldset label {
-            padding-right: 20px;
-        }
-
-        .right-side {
-            vertical-align: top;
-            display: inline-block;
-        }
-
-        .toolbar-section {
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        .info-section {
-            margin: 15px 0;
-        }
-
-        .info-section>* {
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        .info-section table {
-            margin-right: 20px;
-        }
-
-        .info-section ul li {
-            padding: 0;
-        }
-
-        .sched-wrapper {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .sched-table {
-            border-collapse: collapse;
-            font-size: 14px;
-            min-width: 340px;
-        }
-
+        /* Tabela de Horários */
+        .sched-wrapper { border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
+        .sched-table { border-collapse: collapse; font-size: 14px; min-width: 340px; }
         .sched-table th {
-            text-align: left;
-            padding: 10px 14px;
-            font-weight: 500;
-            font-size: 13px;
-            color: #666;
-            background: #f5f5f5;
-            border-bottom: 1px solid #ddd;
+            text-align: left; padding: 10px 14px; font-weight: 500; font-size: 13px;
+            color: #666; background: #f5f5f5; border-bottom: 1px solid #ddd;
         }
-
-        .sched-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-        }
-
-        .sched-row {
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .sched-row:hover {
-            background: #f0f4ff;
-        }
-
-        .sched-row.active {
-            background: #e3eaff;
-        }
-
-        .sched-row.active td {
-            color: #3c4db5;
-        }
-
-        .detail-row td {
-            padding: 0 !important;
-        }
-
-        .detail-panel {
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.3s ease;
-        }
-
-        .detail-panel.open {
-            max-height: 120px;
-        }
-
+        .sched-table td { padding: 12px 14px; border-bottom: 1px solid #eee; color: #333; }
+        .sched-row { cursor: pointer; transition: background 0.15s; }
+        .sched-row:hover { background: #f0f4ff; }
+        .sched-row.active { background: #e3eaff; }
+        .sched-row.active td { color: #3c4db5; }
+        .detail-row td { padding: 0 !important; }
+        
+        /* Painel de Detalhes */
+        .detail-panel { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+        .detail-panel.open { max-height: 120px; }
         .detail-inner {
-            padding: 12px 16px;
-            background: #f9f9f9;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-            color: #555;
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
+            padding: 12px 16px; background: #f9f9f9; border-bottom: 1px solid #eee;
+            font-size: 13px; color: #555; display: flex; gap: 24px; flex-wrap: wrap;
         }
+        .detail-stat { display: flex; flex-direction: column; gap: 2px; }
+        .detail-stat .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: #999; }
+        .detail-stat .stat-value { font-size: 15px; font-weight: 500; color: #333; }
 
-        .detail-stat {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .detail-stat .stat-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #999;
-        }
-
-        .detail-stat .stat-value {
-            font-size: 15px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .sched-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
+        /* Componentes Visuais */
+        .sched-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
         .badge-green { background: #e6f4ea; color: #2d7a3a; }
         .badge-amber { background: #fff3e0; color: #b45309; }
-
-        .chevron-icon {
-            display: inline-block;
-            transition: transform 0.25s;
-            font-size: 18px;
-            vertical-align: middle;
-            color: #999;
-        }
-
-        .chevron-icon.open {
-            transform: rotate(180deg);
-        }
-
-        #subBtn {
-            width: 31.5%;
-            border-radius: 5px;
-        }
+        .chevron-icon { display: inline-block; transition: transform 0.25s; font-size: 18px; vertical-align: middle; color: #999; }
+        .chevron-icon.open { transform: rotate(180deg); }
+        #subBtn { width: 31.5%; border-radius: 5px; }
     </style>
+
     <script>
-        window.onload = function () {
-            materializeControls();
-        }
+        window.onload = function () { materializeControls(); }
 
         function materializeControls() {
-            materializeTextInputs(); 
-            materializeRadioButtons();
-            materializeCheckboxes();
-            materializeTables();
-            materializeLists();
-            materializeButton();
-        }
+            // Mapeamento de seletores e suas respectivas classes MDL para reduzir funções repetidas
+            const config = [
+                { sel: 'input[type="text"], textarea', inputCls: 'mdl-textfield__input', boxCls: 'mdl-textfield', jsCls: 'mdl-js-textfield', lblCls: 'mdl-textfield__label' },
+                { sel: 'select', inputCls: 'mdl-selectfield__input', boxCls: 'mdl-selectfield', jsCls: 'mdl-js-selectfield', lblCls: 'mdl-selectfield__label' },
+                { sel: 'input[type="radio"]', inputCls: 'mdl-radio__input', boxCls: 'mdl-radio', jsCls: 'mdl-js-radio' },
+                { sel: 'input[type="checkbox"]', inputCls: 'mdl-checkbox__input', boxCls: 'mdl-checkbox', jsCls: 'mdl-js-checkbox' }
+            ];
 
-        function materializeTextInputs() {
-            var label, parentEl;
-            document.querySelectorAll('input[type="text"], textarea').forEach(function (control) {
-                parentEl = control.parentElement;
-                control.classList.add('mdl-textfield__input');
-                if (parentEl.tagName != 'DIV') {
-                    return;
-                }
-                parentEl.classList.add('mdl-textfield', 'mdl-js-textfield'); 
-                if (label) {
-                    label.setAttribute('for', control.id || control.name);
-                    label.classList.add('mdl-textfield__label'); 
-                }
-            });
-        }
-
-        function materializeSelects() {
-            var label, parentEl;
-            document.querySelectorAll('select').forEach(function (control) {
-                parentEl = control.parentElement;
-                control.classList.add('mdl-selectfield__input');
-                if (parentEl.tagName != 'DIV') {
-                    return;
-                }
-                parentEl.classList.add('mdl-selectfield', 'mdl-js-selectfield'); 
-                label = parentEl.querySelector('label');
-                if (label) {
-                    label.setAttribute('for', control.id || control.name);
-                    label.classList.add('mdl-selectfield__label'); 
-                }
-            });
-        }
-
-        function materializeRadioButtons() {
-            var parentEl;
-            document.querySelectorAll('input[type="radio"]').forEach(function (control) {
-                parentEl = control.parentElement;
-                control.classList.add('mdl-radio__input');
-                if (parentEl.tagName === 'LABEL') { 
-                    parentEl.setAttribute('for', control.id || control.name);
-                    parentEl.classList.add('mdl-radio', 'mdl-js-radio', 'mdl-js-ripple-effect');
-                }
-            });
-        }
-
-        function materializeCheckboxes() {
-            var parentEl;
-            document.querySelectorAll('input[type="checkbox"]').forEach(function (control) {
-                parentEl = control.parentElement;
-                control.classList.add('mdl-checkbox__input');
-                if (parentEl.tagName === 'LABEL') {
-                    parentEl.setAttribute('for', control.id || control.name);
-                    parentEl.classList.add('mdl-checkbox', 'mdl-js-checkbox', 'mdl-js-ripple-effect');
-                }
-            });
-        }
-
-        function materializeButton() {
-            document.querySelectorAll('button').forEach(function (control) {
-                control.classList.add('mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--colored');
-            });
-        }
-
-        function materializeTables() {
-            document.querySelectorAll('table').forEach(function (table) { 
-                table.classList.add('mdl-data-table', 'mdl-js-data-table');
-                table.querySelectorAll('th, td').forEach(function (cell) {
-                    cell.classList.add('mdl-data-table__cell--non-numeric'); 
+            config.forEach(c => {
+                document.querySelectorAll(c.sel).forEach(control => {
+                    control.classList.add(c.inputCls);
+                    let parent = control.parentElement;
+                    if (c.sel.includes('radio') || c.sel.includes('checkbox')) {
+                        if (parent.tagName === 'LABEL') {
+                            parent.setAttribute('for', control.id || control.name);
+                            parent.classList.add(c.boxCls, c.jsCls, 'mdl-js-ripple-effect');
+                        }
+                    } else if (parent.tagName === 'DIV') {
+                        parent.classList.add(c.boxCls, c.jsCls);
+                        let label = parent.querySelector('label');
+                        if (label) {
+                            label.setAttribute('for', control.id || control.name);
+                            label.classList.add(c.lblCls);
+                        }
+                    }
                 });
             });
-        }
 
-        function materializeLists() {
-            document.querySelectorAll('ul').forEach(function (control) {
-                control.classList.add('mdl-list');
-                control.querySelectorAll('li').forEach(function (li) {
+            // Inicialização simples para Botões, Tabelas estáticas e Listas
+            document.querySelectorAll('button').forEach(btn => btn.classList.add('mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--colored'));
+            document.querySelectorAll('table').forEach(t => {
+                t.classList.add('mdl-data-table', 'mdl-js-data-table');
+                t.querySelectorAll('th, td').forEach(cell => cell.classList.add('mdl-data-table__cell--non-numeric'));
+            });
+            document.querySelectorAll('ul').forEach(ul => {
+                ul.classList.add('mdl-list');
+                ul.querySelectorAll('li').forEach(li => {
                     li.classList.add('mdl-list__item');
-                    li.innerHTML = "<span class='mdl-list__item-primary-content'>" +
-                        "<i class='material-icons mdl-list__item-icon'>home</i>" +
-                        li.innerText + "</span>"; 
+                    li.innerHTML = `<span class='mdl-list__item-primary-content'><i class='material-icons mdl-list__item-icon'>home</i>${li.innerText}</span>`;
                 });
             });
         }
@@ -319,7 +135,6 @@
                     <label>Telefone:</label>
                     <input type="text" name="phone" id="phone" required />
                 </div>
-
                 <div class="mdl-selectfield--floating-label">
                     <label>Nível de Formação:</label> 
                     <select name="education" id="Training" required>
@@ -330,7 +145,6 @@
                         <option value="Pós-Doutorado">Pós-Doutorado</option>
                     </select>
                 </div>
-
                 <div class="mdl-selectfield--floating-label">
                     <label>Gênero</label>
                     <select name="gender" id="gender" required>
@@ -347,6 +161,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="info-section">
             <div class="sched-wrapper">
                 <table class="sched-table" id="schedTable">
@@ -379,78 +194,52 @@
             <button type="submit" name="submit" id="subBtn">Enviar</button>
         </div>
     </form>
+
     <script>
-        var schedules = [
-            {
-                id: 'seg',
-                dias: 'Seg-Sex',
-                expediente: '09:00 - 17:00',
-                intervalo: '12:00 - 12:30',
-                cargaHoraria: '7h30',
-                frequencia: '5 dias/semana',
-                tipoIntervalo: '30 min',
-                badge: 'green',
-                badgeLabel: 'Dias úteis'
-            },
-            {
-                id: 'sab',
-                dias: 'Sábados',
-                expediente: '08:00 - 19:00',
-                intervalo: '12:00 - 12:15',
-                cargaHoraria: '10h45',
-                frequencia: '1 dia/semana',
-                tipoIntervalo: '15 min',
-                badge: 'amber',
-                badgeLabel: 'Fim de semana'
-            },
-            {
-                id: 'dom',
-                dias: 'Domingo',
-                expediente: '06:00 - 22:00',
-                intervalo: 'Folga',
-                cargaHoraria: '16h',
-                frequencia: '1 dia/semana',
-                tipoIntervalo: 'Folga',
-                badge: 'amber',
-                badgeLabel: 'Fim de semana'
-            }
+        const schedules = [
+            { id: 'seg', dias: 'Seg-Sex', expediente: '09:00 - 17:00', intervalo: '12:00 - 12:30', cargaHoraria: '7h30', frequencia: '5 dias/semana', tipoIntervalo: '30 min', badge: 'green', badgeLabel: 'Dias úteis' },
+            { id: 'sab', dias: 'Sábados', expediente: '08:00 - 19:00', intervalo: '12:00 - 12:15', cargaHoraria: '10h45', frequencia: '1 dia/semana', tipoIntervalo: '15 min', badge: 'amber', badgeLabel: 'Fim de semana' },
+            { id: 'dom', dias: 'Domingo', expediente: '06:00 - 22:00', intervalo: 'Folga', cargaHoraria: '16h', frequencia: '1 dia/semana', tipoIntervalo: 'Folga', badge: 'amber', badgeLabel: 'Fim de semana' }
         ];
 
-        var openId = null;
+        let openId = null;
 
         function renderSched() {
-            var tbody = document.getElementById('schedBody');
+            const tbody = document.getElementById('schedBody');
             tbody.innerHTML = '';
-            schedules.forEach(function (s) {
-                var isOpen = openId === s.id;
+            
+            schedules.forEach(s => {
+                const isOpen = openId === s.id;
 
-                var rowTr = document.createElement('tr');
-                rowTr.className = 'sched-row' + (isOpen ? ' active' : '');
-                rowTr.innerHTML =
-                    '<td><strong>' + s.dias + '</strong></td>' +
-                    '<td>' + s.expediente + '</td>' +
-                    '<td>' + (s.id === 'dom' ? '<em style="color:#aaa">Folga</em>' : s.intervalo) + '</td>' +
-                    '<td><span class="chevron-icon material-icons' + (isOpen ? ' open' : '') + '">expand_more</span></td>';
-                rowTr.addEventListener('click', function () {
+                // Linha Principal
+                const rowTr = document.createElement('tr');
+                rowTr.className = `sched-row ${isOpen ? 'active' : ''}`;
+                rowTr.innerHTML = `
+                    <td><strong>${s.dias}</strong></td>
+                    <td>${s.expediente}</td>
+                    <td>${s.id === 'dom' ? '<em style="color:#aaa">Folga</em>' : s.intervalo}</td>
+                    <td><span class="chevron-icon material-icons ${isOpen ? 'open' : ''}">expand_more</span></td>
+                `;
+                rowTr.addEventListener('click', () => {
                     openId = isOpen ? null : s.id;
                     renderSched();
                 });
 
-                var detailTr = document.createElement('tr');
+                // Linha de Detalhes
+                const detailTr = document.createElement('tr');
                 detailTr.className = 'detail-row';
-                var detailTd = document.createElement('td');
-                detailTd.setAttribute('colspan', '4');
-                var panel = document.createElement('div');
-                panel.className = 'detail-panel' + (isOpen ? ' open' : '');
-                panel.innerHTML =
-                    '<div class="detail-inner">' +
-                        '<div class="detail-stat"><span class="stat-label">Carga horária</span><span class="stat-value">' + s.cargaHoraria + '</span></div>' +
-                        '<div class="detail-stat"><span class="stat-label">Intervalo</span><span class="stat-value">' + s.tipoIntervalo + '</span></div>' +
-                        '<div class="detail-stat"><span class="stat-label">Frequência</span><span class="stat-value">' + s.frequencia + '</span></div>' +
-                        '<div class="detail-stat"><span class="stat-label">Tipo de dia</span><span class="stat-value"><span class="sched-badge badge-' + s.badge + '">' + s.badgeLabel + '</span></span></div>' +
-                    '</div>';
-                detailTd.appendChild(panel);
-                detailTr.appendChild(detailTd);
+                detailTr.innerHTML = `
+                    <td colspan="4">
+                        <div class="detail-panel ${isOpen ? 'open' : ''}">
+                            <div class="detail-inner">
+                                <div class="detail-stat"><span class="stat-label">Carga horária</span><span class="stat-value">${s.cargaHoraria}</span></div>
+                                <div class="detail-stat"><span class="stat-label">Intervalo</span><span class="stat-value">${s.tipoIntervalo}</span></div>
+                                <div class="detail-stat"><span class="stat-label">Frequência</span><span class="stat-value">${s.frequencia}</span></div>
+                                <div class="detail-stat"><span class="stat-label">Tipo de dia</span><span class="stat-value"><span class="sched-badge badge-${s.badge}">${s.badgeLabel}</span></span></div>
+                            </div>
+                        </div>
+                    </td>
+                `;
 
                 tbody.appendChild(rowTr);
                 tbody.appendChild(detailTr);
