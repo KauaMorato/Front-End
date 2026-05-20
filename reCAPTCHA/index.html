@@ -116,6 +116,17 @@
                 });
             });
         }
+
+        doument.querySelector('#form').addEventListener('submit', e =>{
+            e.preventDefault();
+            const name = document.querySelector('#name').value;
+            const email = document.querySelector('#email').value;
+            const phone = document.querySelector('#phone').value;
+            const training = document.querySelector('#training').value;
+            const gender = document.querySelector('#gender').value;
+
+            const recaptcha = doument.querySelector('#g-recaptcha-response')
+        })
     </script>
 </head>
 
