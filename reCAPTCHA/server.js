@@ -1,63 +1,66 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs')
-const request = require("request")
-var people = [];
-
-fs.readFile('InfosPeople.json', function read(err, data) {
-    if (err) {
-        throw err;
-    }
-    try {
-        var peopleInfo = JSON.parse(data);
-        people = peopleInfo
-    } catch (e) {
-        console.log("Arquivo Vazio");
-    }
-})
+const fs = require('fs');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use('/', express.static(__dirname + '/public'));
+// Servir arquivos estáticos da raiz (onde está o index.html)
+app.use(express.static(__dirname));
 
-app.post('/', (req, res) => {
-    console.log(req);
-})
+let people = [];
+
+// Carregar dados do JSON
+fs.readFile('InfosPeople.json', 'utf8', (err, data) => {
+    if (err) {
+        console.log("Arquivo não encontrado ou vazio, iniciando vazio.");
+        people = [];
+        return;
+    }
+    try {
+        people = JSON.parse(data);
+    } catch (e) {
+        console.log("Erro ao parsear JSON, iniciando vazio.");
+        people = [];
+    }
+});
 
 app.post('/subscribe', (req, res) => {
-    if (
-        req.body.reCaptcha == undefined ||
-        req.body.reCaptcha == '' ||
-        req.body.reCaptcha == null
-    ) {
-        return res.json({ "success": false, 'msg': "Preencha o reCaptcha!" })
+    const recaptchaResponse = req.body['g-recaptcha-response'];
+
+    if (!recaptchaResponse) {
+        return res.json({ success: false, msg: "Preencha o reCAPTCHA!" });
     }
+
     const secretKey = '6LckEfEsAAAAAIvogwvIHEJioxkBwUGkKFyu-V6G';
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaResponse}&remoteip=${req.ip}`;
 
-    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.reCaptcha}&remoteip=${req.connection.remoteAddress}`;
+    // Usando fetch nativo (Node 18+)
+    fetch(verifyUrl)
+        .then(res => res.json())
+        .then(body => {
+            if (!body.success) {
+                return res.json({ success: false, msg: "Verificação do reCAPTCHA falhou!" });
+            }
 
-    request(verifyUrl, (err, response, body) => {
-        body = JSON.parse(body);
+            // Se chegou aqui, reCAPTCHA está OK
+            const data = req.body;
+            people.push(data);
 
-        if (body.success != undefined && !body.success) {
-            return res.json({ "sucess": false, "msg": "Verificação Falhou!" })
-        }
+            fs.writeFile('InfosPeople.json', JSON.stringify(people, null, 2), (err) => {
+                if (err) console.error("Erro ao salvar JSON:", err);
+            });
 
-        return res.json({ "success": true, "msg": "Verificação Sucedida!" })
-    })
-
-    var data = req.body;
-
-    people.push(data);
-
-    fs.writeFile('InfosPeople.json', JSON.stringify(people, null, 2), (e) => {
-        console.log(e);
-    })
-})
+            res.json({ success: true, msg: "Inscrição realizada com sucesso!" });
+        })
+        .catch(err => {
+            console.error(err);
+            res.json({ success: false, msg: "Erro interno no servidor" });
+        });
+});
 
 app.listen(3000, () => {
-    console.log("servidor iniciado na porta 3000!");
-})
+    console.log("🚀 Servidor rodando na porta 3000!");
+});

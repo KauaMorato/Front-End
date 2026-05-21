@@ -14,3 +14,4 @@ Link do vídeo: https://youtu.be/tCxdg922_Mc?si=zpuZ-J7umWAwVD2s
     Na parte 2 desse projeto estou fazendo o Back-end, para isso usei os seguintes comandos 
         npm init
         npm install --save express request body-parser
+        npm install express --save

@@ -262,13 +262,13 @@
             const name = document.querySelector('#name').value;
             const email = document.querySelector('#email').value;
             const phone = document.querySelector('#phone').value;
-            const training = document.querySelector('#training').value;
+            const training = document.querySelector('#Training').value;
             const gender = document.querySelector('#gender').value;
 
             const recaptcha = doument.querySelector('#g-recaptcha-response').value;
 
             fetch('/subscribe', {
-                nethod: "POST",
+                method: "POST",
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-type': 'application/json'

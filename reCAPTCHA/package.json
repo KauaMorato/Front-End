@@ -1,7 +1,13 @@
 {
+  "name": "form-recaptcha",
+  "version": "1.0.0",
+  "description": "Formulário com reCAPTCHA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
   "dependencies": {
-    "body-parser": "^2.2.2",
-    "express": "^5.2.1",
-    "request": "^2.88.2"
+    "express": "^4.19.2"
   }
 }
