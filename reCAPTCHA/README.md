@@ -15,3 +15,15 @@ Link do vídeo: https://youtu.be/tCxdg922_Mc?si=zpuZ-J7umWAwVD2s
         npm init
         npm install --save express request body-parser
         npm install express --save
+
+    Para conseguir rodar o código tive que rodar esses comandos no terminal
+        cd reCAPTCHA
+        dir
+        node server.js
+
+    Tive que pedir ajuda para IA, no vídeo mostra apenas como se tivesse criado um repositório novo, por tanto, tive que usar o comando "cd reCAPTCHA" para acessar a pasta expecifica
+
+Link do vídeo: https://youtu.be/3hlOdJ1RDzI?si=I2qopI3xfpgZGUON
+
+## Para visualizar o projeto acesse https://localhost:3000
+        Obs: Tenha a pasta do projeto baixada
