@@ -26,4 +26,4 @@ Link do vídeo: https://youtu.be/tCxdg922_Mc?si=zpuZ-J7umWAwVD2s
 Link do vídeo: https://youtu.be/3hlOdJ1RDzI?si=I2qopI3xfpgZGUON
 
 ## Para visualizar o projeto acesse https://localhost:3000
-        Obs: Tenha a pasta do projeto baixada
+        Observação: Tenha a pasta do projeto baixada
