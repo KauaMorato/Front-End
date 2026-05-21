@@ -14,60 +14,200 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
-        body, form { display: flex; justify-content: center; align-items: center; }
-        body { padding: 20px; width: 100%; box-sizing: border-box; }
-        
+        body,
         form {
-            width: 50%; box-shadow: 1px 2px 4px grey; border-radius: 5px;
-            flex-wrap: wrap; padding: 32px; text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .left-side, .right-side, .info-section>*, .sched-wrapper, .info-section table {
-            display: inline-block; vertical-align: top;
+        body {
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .left-side { margin-right: 20px; }
-        .left-side div { display: block; }
-        .left-side fieldset { margin: 20px 0; }
-        .left-side fieldset label { padding-right: 20px; }
-        #my-textarea { transform: translateY(-2px); }
-        .toolbar-section { width: 100%; margin-top: 50px; }
-        .info-section { margin: 15px 0; }
-        .info-section table { margin-right: 20px; }
-        .info-section ul li { padding: 0; }
+        form {
+            width: 50%;
+            box-shadow: 1px 2px 4px grey;
+            border-radius: 5px;
+            flex-wrap: wrap;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .left-side,
+        .right-side,
+        .info-section>*,
+        .sched-wrapper,
+        .info-section table {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .left-side {
+            margin-right: 20px;
+        }
+
+        .left-side div {
+            display: block;
+        }
+
+        .left-side fieldset {
+            margin: 20px 0;
+        }
+
+        .left-side fieldset label {
+            padding-right: 20px;
+        }
+
+        #my-textarea {
+            transform: translateY(-2px);
+        }
+
+        .toolbar-section {
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .info-section {
+            margin: 15px 0;
+        }
+
+        .info-section table {
+            margin-right: 20px;
+        }
+
+        .info-section ul li {
+            padding: 0;
+        }
 
         /* Tabela dos Horários */
-        .sched-wrapper { border: 1px solid #ddd; border-radius: 5px; overflow: hidden; }
-        .sched-table { border-collapse: collapse; font-size: 14px; min-width: 340px; }
+        .sched-wrapper {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .sched-table {
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 340px;
+        }
+
         .sched-table th {
-            text-align: left; padding: 10px 14px; font-weight: 500; font-size: 13px;
-            color: #666; background: #f5f5f5; border-bottom: 1px solid #ddd;
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 500;
+            font-size: 13px;
+            color: #666;
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
         }
-        .sched-table td { padding: 12px 14px; border-bottom: 1px solid #eee; color: #333; }
-        .sched-row { cursor: pointer; transition: background 0.15s; }
-        .sched-row:hover { background: #f0f4ff; }
-        .sched-row.active { background: #e3eaff; }
-        .sched-row.active td { color: #3c4db5; }
-        .detail-row td { padding: 0 !important; }
-        
+
+        .sched-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+
+        .sched-row {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .sched-row:hover {
+            background: #f0f4ff;
+        }
+
+        .sched-row.active {
+            background: #e3eaff;
+        }
+
+        .sched-row.active td {
+            color: #3c4db5;
+        }
+
+        .detail-row td {
+            padding: 0 !important;
+        }
+
         /* Painel com os Detalhes */
-        .detail-panel { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
-        .detail-panel.open { max-height: 120px; }
-        .detail-inner {
-            padding: 12px 16px; background: #f9f9f9; border-bottom: 1px solid #eee;
-            font-size: 13px; color: #555; display: flex; gap: 24px; flex-wrap: wrap;
+        .detail-panel {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
         }
-        .detail-stat { display: flex; flex-direction: column; gap: 2px; }
-        .detail-stat .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: #999; }
-        .detail-stat .stat-value { font-size: 15px; font-weight: 500; color: #333; }
+
+        .detail-panel.open {
+            max-height: 120px;
+        }
+
+        .detail-inner {
+            padding: 12px 16px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            color: #555;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .detail-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .detail-stat .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #999;
+        }
+
+        .detail-stat .stat-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+        }
 
         /* Visual da página */
-        .sched-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
-        .badge-green { background: #e6f4ea; color: #2d7a3a; }
-        .badge-amber { background: #fff3e0; color: #b45309; }
-        .chevron-icon { display: inline-block; transition: transform 0.25s; font-size: 18px; vertical-align: middle; color: #999; }
-        .chevron-icon.open { transform: rotate(180deg); }
-        #subBtn { width: 31.5%; border-radius: 5px; }
+        .sched-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-green {
+            background: #e6f4ea;
+            color: #2d7a3a;
+        }
+
+        .badge-amber {
+            background: #fff3e0;
+            color: #b45309;
+        }
+
+        .chevron-icon {
+            display: inline-block;
+            transition: transform 0.25s;
+            font-size: 18px;
+            vertical-align: middle;
+            color: #999;
+        }
+
+        .chevron-icon.open {
+            transform: rotate(180deg);
+        }
+
+        #subBtn {
+            width: 31.5%;
+            border-radius: 5px;
+        }
     </style>
 
     <script>
@@ -117,7 +257,7 @@
             });
         }
 
-        doument.querySelector('#form').addEventListener('submit', e =>{
+        doument.querySelector('#form').addEventListener('submit', e => {
             e.preventDefault();
             const name = document.querySelector('#name').value;
             const email = document.querySelector('#email').value;
@@ -125,7 +265,21 @@
             const training = document.querySelector('#training').value;
             const gender = document.querySelector('#gender').value;
 
-            const recaptcha = doument.querySelector('#g-recaptcha-response')
+            const recaptcha = doument.querySelector('#g-recaptcha-response').value;
+
+            fetch('/subscribe', {
+                nethod: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ name: name, email: email, phone: phone, training: training, gender: gender, reCaptcha: reCaptcha })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    alert(data.msg)
+                    location.reload();
+                })
         })
     </script>
 </head>
@@ -147,11 +301,11 @@
                     <input type="text" name="phone" id="phone" required />
                 </div>
                 <div class="mdl-selectfield--floating-label">
-                    <label>Nível de Formação:</label> 
+                    <label>Nível de Formação:</label>
                     <select name="education" id="Training" required>
                         <option value=""></option>
                         <option value="Ensino Médio">Ensino Médio</option>
-                        <option value="Bacharelado">Bacharelado</option> 
+                        <option value="Bacharelado">Bacharelado</option>
                         <option value="Faculdade">Faculdade</option>
                         <option value="Pós-Doutorado">Pós-Doutorado</option>
                     </select>
@@ -172,7 +326,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="info-section">
             <div class="sched-wrapper">
                 <table class="sched-table" id="schedTable">
@@ -188,7 +342,7 @@
                 </table>
             </div>
             <fieldset>
-                <legend><b>Nós Temos Escritório em:</b></legend> 
+                <legend><b>Nós Temos Escritório em:</b></legend>
                 <ul>
                     <li>São Paulo</li>
                     <li>Jundiaí</li>
@@ -218,7 +372,7 @@
         function renderSched() {
             const tbody = document.getElementById('schedBody');
             tbody.innerHTML = '';
-            
+
             schedules.forEach(s => {
                 const isOpen = openId === s.id;
 
