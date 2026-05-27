@@ -3,4 +3,4 @@
 
 Projeto de um minigame para testar a criação e prática de prompts feitos por um ser humano
 
-## Projeto feito por IA!!!
+## Projeto feito totalmente por uma IA!!!
