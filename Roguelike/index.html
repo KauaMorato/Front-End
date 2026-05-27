@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Roguelike RPG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu-screen" class="screen">
+        <h1>Idle Roguelike</h1>
+        <div class="menu-buttons">
+            <button onclick="changeScreen('class-screen')">Jogar</button>
+            <button onclick="openLoadMenu()">Carregar Jogo</button>
+            <button onclick="alert('Desenvolvido por você! Em 2026.')">Créditos</button>
+        </div>
+        
+        <div id="load-area" class="hidden">
+            <input type="text" id="save-input" placeholder="Cole o código do seu save aqui">
+            <button onclick="loadGame()">Confirmar</button>
+        </div>
+    </div>
+
+    <div id="class-screen" class="screen hidden">
+        <h2>Escolha sua Classe</h2>
+        <div class="class-container">
+            <div class="class-card" onclick="selectClass('Guerreiro')">
+                <h3>Guerreiro</h3>
+                <p>Vida: 200 | Atk: 10 | Vel: 2s</p>
+                <span>Habilidade: Escudo de Espinhos</span>
+            </div>
+            <div class="class-card" onclick="selectClass('Arqueiro')">
+                <h3>Arqueiro</h3>
+                <p>Vida: 150 | Atk: 12 | Vel: 1s</p>
+                <span>Habilidade: Tiro Preciso</span>
+            </div>
+            <div class="class-card" onclick="selectClass('Mago')">
+                <h3>Mago</h3>
+                <p>Vida: 90 | Atk: 20 | Vel: 1.5s</p>
+                <span>Habilidade: Explosão Arcana</span>
+            </div>
+        </div>
+        <button class="back-btn" onclick="changeScreen('menu-screen')">Voltar ao Menu</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div class="hud">
+            <div>Rodada: <span id="hud-round">1</span></div>
+            <div>Classe: <span id="hud-class">-</span></div>
+            <div>✨ Almas: <span class="soul-count">0</span></div>
+        </div>
+
+        <div class="battlefield">
+            <div class="character-box">
+                <h3 id="hero-name">Herói</h3>
+                <p>Vida: <span id="hero-hp">100</span>/<span id="hero-max-hp">100</span></p>
+            </div>
+            <div class="vs">VS</div>
+            <div class="character-box">
+                <h3 id="enemy-name">NPC</h3>
+                <p>Vida: <span id="enemy-hp">50</span>/<span id="enemy-max-hp">50</span></p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="btn-attack" onclick="manualAttack()">Atacar Manual</button>
+            <button id="btn-auto" onclick="toggleAutoAttack()">Auto: DESLIGADO</button>
+            <button id="btn-skill" onclick="useSkill()">Usar Habilidade</button>
+        </div>
+        
+        <div class="log" id="battle-log">O combate vai começar...</div>
+    </div>
+
+    <div id="gameover-screen" class="screen gameover-layout hidden">
+        <div class="upgrades-sidebar">
+            <h3>Seus Upgrades</h3>
+            <p>Vida Comprada: +<span id="stat-bought-hp">0</span></p>
+            <p>Ataque Comprado: +<span id="stat-bought-atk">0</span></p>
+            <hr style="border-color: #444;">
+            <p>Total de ✨ Almas: <span class="soul-count">0</span></p>
+        </div>
+
+        <div class="main-gameover">
+            <h2>Você Morreu!</h2>
+            <p>Você chegou até a rodada <span id="go-round">0</span></p>
+            
+            <div class="upgrades-section">
+                <h3>Loja de Melhorias Permanentes</h3>
+                <button onclick="buyUpgrade('hp')" class="shop-btn">Mais Vida (+20) <br><small>Custo: 10 Almas</small></button>
+                <button onclick="buyUpgrade('atk')" class="shop-btn">Mais Ataque (+5) <br><small>Custo: 10 Almas</small></button>
+            </div>
+
+            <div class="menu-buttons" style="margin-top: 20px;">
+                <button onclick="restartGame()">Jogar Novamente</button>
+                <button onclick="exportSave()">Salvar Jogo (Código)</button>
+                <button onclick="changeScreen('menu-screen')">Ir para o Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
