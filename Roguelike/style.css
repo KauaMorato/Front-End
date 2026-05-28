@@ -1,3 +1,4 @@
+/* --- CONFIGURAÇÕES GERAIS --- */
 body {
     background-color: #121214;
     color: #e1e1e6;
@@ -9,19 +10,158 @@ body {
     margin: 0;
 }
 
+/* --- CONFIGURAÇÃO PADRÃO DAS TELAS (AUMENTADA) --- */
 .screen {
     background-color: #202024;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     text-align: center;
-    width: 450px;
+    width: 600px; /* Aumentado de 450px para 600px para dar mais espaço */
+    box-sizing: border-box;
 }
 
-/* Novo layout para tela de Game Over com painel esquerdo */
-.gameover-layout {
+/* --- ELEMENTOS ESCONDIDOS --- */
+.hidden { 
+    display: none !important; 
+}
+
+/* --- BOTÕES E CONTROLES (ENQUADRADOS) --- */
+.menu-buttons button, .back-btn, .controls button, .shop-btn {
+    display: block;
+    width: 100%;
+    padding: 14px; /* Um pouquinho mais alto para melhorar o clique */
+    margin: 12px 0;
+    background-color: #9871f5;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: background 0.2s;
+}
+
+.menu-buttons button:hover, .controls button:hover { 
+    background-color: #7b58c4; 
+}
+
+.back-btn { 
+    background-color: #f75a68; 
+}
+
+.back-btn:hover { 
+    background-color: #c53b47; 
+}
+
+.shop-btn {
+    background-color: #29292e;
+    border: 1px solid #444;
+}
+
+.shop-btn:hover {
+    background-color: #323238;
+    border-color: #9871f5;
+}
+
+.shop-btn small { 
+    color: #04d361; 
+}
+
+/* --- SELEÇÃO DE CLASSE --- */
+.class-container {
     display: flex;
-    width: 700px; /* Mais larga para caber o painel */
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.class-card {
+    background-color: #29292e;
+    padding: 18px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.class-card:hover { 
+    border-color: #9871f5; 
+}
+
+.class-card h3 { margin: 0 0 5px 0; }
+.class-card p { margin: 0 0 5px 0; font-size: 0.95rem; color: #c4c4cc; }
+.class-card span { font-size: 0.85rem; color: #04d361; font-weight: bold; }
+
+/* --- HUD (MELHORADO PARA NÃO QUEBRAR LINHA) --- */
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #121214;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    gap: 10px;
+}
+
+/* --- CAMPO DE BATALHA (MAIS LARGO E ALINHADO) --- */
+.battlefield {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0;
+    gap: 15px;
+}
+
+.character-box {
+    background-color: #29292e;
+    padding: 20px 15px;
+    width: 44%; /* Ajustado para preencher melhor as laterais */
+    border-radius: 8px;
+    box-sizing: border-box;
+    min-height: 110px; /* Garante que nomes grandes de monstros não desalitem as caixas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.character-box h3 { 
+    margin: 0 0 8px 0; 
+    font-size: 1.1rem;
+}
+
+.character-box p {
+    margin: 0;
+}
+
+.vs { 
+    font-weight: bold; 
+    color: #f75a68; 
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+/* --- LOG DE COMBATE --- */
+.log {
+    background-color: #121214;
+    padding: 12px;
+    height: 120px; /* Um pouquinho mais alto para ler melhor */
+    overflow-y: auto;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    text-align: left;
+    margin-top: 20px;
+    border: 1px solid #29292e;
+    line-height: 1.4;
+}
+
+/* --- TELA DE GAME OVER (PROPORCIONAL À NOVA LARGURA) --- */
+#gameover-screen.gameover-layout:not(.hidden) {
+    display: flex !important; 
+    width: 850px; /* Expandido para acomodar proporcionalmente a nova largura */
     padding: 0;
     overflow: hidden;
 }
@@ -29,99 +169,213 @@ body {
 .upgrades-sidebar {
     background-color: #121214;
     width: 35%;
-    padding: 30px 20px;
+    padding: 35px 25px;
     text-align: left;
     border-right: 2px solid #29292e;
+    box-sizing: border-box;
 }
 
-.upgrades-sidebar h3 {
-    margin-top: 0;
-    color: #04d361;
+.upgrades-sidebar h3 { margin-top: 0; color: #04d361; }
+.main-gameover { width: 65%; padding: 35px; box-sizing: border-box; }
+.main-gameover h2 { margin-top: 0; color: #f75a68; }
+
+#save-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    background-color: #121214;
+    border: 1px solid #29292e;
+    color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
+}/* --- CONFIGURAÇÕES GERAIS --- */
+body {
+    background-color: #121214;
+    color: #e1e1e6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-.main-gameover {
-    width: 65%;
-    padding: 30px;
+/* --- CONFIGURAÇÃO PADRÃO DAS TELAS (AUMENTADA) --- */
+.screen {
+    background-color: #202024;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    width: 600px; /* Aumentado de 450px para 600px para dar mais espaço */
+    box-sizing: border-box;
 }
 
-.hidden { display: none !important; }
+/* --- ELEMENTOS ESCONDIDOS --- */
+.hidden { 
+    display: none !important; 
+}
 
+/* --- BOTÕES E CONTROLES (ENQUADRADOS) --- */
 .menu-buttons button, .back-btn, .controls button, .shop-btn {
     display: block;
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+    padding: 14px; /* Um pouquinho mais alto para melhorar o clique */
+    margin: 12px 0;
     background-color: #9871f5;
     border: none;
     color: white;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
+    box-sizing: border-box;
+    transition: background 0.2s;
 }
 
-.menu-buttons button:hover, .controls button:hover, .shop-btn:hover { background-color: #7b58c4; }
+.menu-buttons button:hover, .controls button:hover { 
+    background-color: #7b58c4; 
+}
+
+.back-btn { 
+    background-color: #f75a68; 
+}
+
+.back-btn:hover { 
+    background-color: #c53b47; 
+}
 
 .shop-btn {
     background-color: #29292e;
     border: 1px solid #444;
 }
-.shop-btn small { color: #04d361; }
 
-.back-btn { background-color: #f75a68; }
-.back-btn:hover { background-color: #c53b47; }
+.shop-btn:hover {
+    background-color: #323238;
+    border-color: #9871f5;
+}
 
+.shop-btn small { 
+    color: #04d361; 
+}
+
+/* --- SELEÇÃO DE CLASSE --- */
 .class-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
 .class-card {
     background-color: #29292e;
-    padding: 15px;
+    padding: 18px;
     border: 2px solid transparent;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.class-card:hover { border-color: #9871f5; }
+.class-card:hover { 
+    border-color: #9871f5; 
+}
+
+.class-card h3 { margin: 0 0 5px 0; }
+.class-card p { margin: 0 0 5px 0; font-size: 0.95rem; color: #c4c4cc; }
 .class-card span { font-size: 0.85rem; color: #04d361; font-weight: bold; }
 
+/* --- HUD (MELHORADO PARA NÃO QUEBRAR LINHA) --- */
 .hud {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #121214;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    gap: 10px;
 }
 
+/* --- CAMPO DE BATALHA (MAIS LARGO E ALINHADO) --- */
 .battlefield {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0;
+    margin: 25px 0;
+    gap: 15px;
 }
 
 .character-box {
     background-color: #29292e;
-    padding: 15px;
-    width: 40%;
-    border-radius: 6px;
+    padding: 20px 15px;
+    width: 44%; /* Ajustado para preencher melhor as laterais */
+    border-radius: 8px;
+    box-sizing: border-box;
+    min-height: 110px; /* Garante que nomes grandes de monstros não desalitem as caixas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.vs { font-weight: bold; color: #f75a68; }
+.character-box h3 { 
+    margin: 0 0 8px 0; 
+    font-size: 1.1rem;
+}
 
+.character-box p {
+    margin: 0;
+}
+
+.vs { 
+    font-weight: bold; 
+    color: #f75a68; 
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+/* --- LOG DE COMBATE --- */
 .log {
     background-color: #121214;
-    padding: 10px;
-    height: 100px;
+    padding: 12px;
+    height: 120px; /* Um pouquinho mais alto para ler melhor */
     overflow-y: auto;
     font-size: 0.9rem;
-    border-radius: 4px;
+    border-radius: 6px;
     text-align: left;
+    margin-top: 20px;
+    border: 1px solid #29292e;
+    line-height: 1.4;
+}
+
+/* --- TELA DE GAME OVER (PROPORCIONAL À NOVA LARGURA) --- */
+#gameover-screen.gameover-layout:not(.hidden) {
+    display: flex !important; 
+    width: 850px; /* Expandido para acomodar proporcionalmente a nova largura */
+    padding: 0;
+    overflow: hidden;
+}
+
+.upgrades-sidebar {
+    background-color: #121214;
+    width: 35%;
+    padding: 35px 25px;
+    text-align: left;
+    border-right: 2px solid #29292e;
+    box-sizing: border-box;
+}
+
+.upgrades-sidebar h3 { margin-top: 0; color: #04d361; }
+.main-gameover { width: 65%; padding: 35px; box-sizing: border-box; }
+.main-gameover h2 { margin-top: 0; color: #f75a68; }
+
+#save-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    background-color: #121214;
+    border: 1px solid #29292e;
+    color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
 }

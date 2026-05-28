@@ -8,6 +8,7 @@
 </head>
 <body>
 
+    <!-- 1. TELA DO MENU INICIAL -->
     <div id="menu-screen" class="screen">
         <h1>Idle Roguelike</h1>
         <div class="menu-buttons">
@@ -22,6 +23,7 @@
         </div>
     </div>
 
+    <!-- 2. TELA DE SELEÇÃO DE PERSONAGEM -->
     <div id="class-screen" class="screen hidden">
         <h2>Escolha sua Classe</h2>
         <div class="class-container">
@@ -44,8 +46,10 @@
         <button class="back-btn" onclick="changeScreen('menu-screen')">Voltar ao Menu</button>
     </div>
 
+    <!-- 3. TELA DE JOGO (BATALHA) -->
     <div id="game-screen" class="screen hidden">
         <div class="hud">
+            <div>Mapa: <span id="hud-map" style="color: #04d361; font-weight: bold;">Floresta</span></div>
             <div>Rodada: <span id="hud-round">1</span></div>
             <div>Classe: <span id="hud-class">-</span></div>
             <div>✨ Almas: <span class="soul-count">0</span></div>
@@ -72,7 +76,9 @@
         <div class="log" id="battle-log">O combate vai começar...</div>
     </div>
 
+    <!-- 4. TELA DE MORTE / MELHORIAS -->
     <div id="gameover-screen" class="screen gameover-layout hidden">
+        <!-- Painel Esquerdo: Histórico de Upgrades -->
         <div class="upgrades-sidebar">
             <h3>Seus Upgrades</h3>
             <p>Vida Comprada: +<span id="stat-bought-hp">0</span></p>
@@ -81,6 +87,7 @@
             <p>Total de ✨ Almas: <span class="soul-count">0</span></p>
         </div>
 
+        <!-- Painel Direito: Ações de Compra e Menu -->
         <div class="main-gameover">
             <h2>Você Morreu!</h2>
             <p>Você chegou até a rodada <span id="go-round">0</span></p>

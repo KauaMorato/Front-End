@@ -11,11 +11,33 @@ let player = {
     upgradesAtk: 0
 };
 
-// ATRIBUTOS ATUALIZADOS AQUI (Mago: hp: 90, atk: 20)
 const classTemplates = {
     "Guerreiro": { hp: 200, atk: 10, attackSpeed: 2000 }, 
     "Arqueiro":  { hp: 150, atk: 12, attackSpeed: 1000 }, 
     "Mago":      { hp: 90,  atk: 20, attackSpeed: 1500 }  
+};
+
+const mapBiomes = {
+    floresta: {
+        name: "🌲 Floresta Encantada",
+        monsters: ["Fada Corrompida", "Grifo Jovem", "Lobo da Floresta", "Ent Ancião", "Aranha Gigante"],
+        boss: "👑 Rei dos Grifos"
+    },
+    deserto: {
+        name: "🏜️ Deserto Escaldante",
+        monsters: ["Escorpião Rei", "Cobra Cascavel", "Hiena Faminta", "Múmia Esquecida", "Espírito da Areia"],
+        boss: "👑 Verme Sombrio do Deserto"
+    },
+    neve: {
+        name: "❄️ Picos Nevados",
+        monsters: ["Urso Polar", "Boneco de Neve Assassino", "Lobo Invernal", "Golem de Gelo", "Yeti Jovem"],
+        boss: "👑 Abominável Homem das Neves"
+    },
+    vazio: {
+        name: "🌌 Vazio Cósmico (Infinito)",
+        monsters: ["Aberração Estelar", "Devorador de Planetas", "Sombra do Caos"],
+        boss: "👑 Titã do Vazio"
+    }
 };
 
 let enemy = { name: "NPC", hp: 0, maxHp: 0, atk: 0 };
@@ -63,14 +85,28 @@ function selectClass(className) {
 function setupRound() {
     document.getElementById('hud-round').innerText = currentRound;
     
-    if (currentRound % 10 === 0) {
-        enemy.name = "🚨 MEGA BOSS 🚨";
-        enemy.maxHp = 100 + (currentRound * 18);
-        enemy.atk = 10 + (currentRound * 2.5);
+    let currentBiome;
+    if (currentRound <= 100) {
+        currentBiome = mapBiomes.floresta;
+    } else if (currentRound <= 200) {
+        currentBiome = mapBiomes.deserto;
+    } else if (currentRound <= 300) {
+        currentBiome = mapBiomes.neve;
     } else {
-        enemy.name = `Monstro lv.${currentRound}`;
-        enemy.maxHp = 25 + (currentRound * 7);
-        enemy.atk = 4 + (currentRound * 1.3);
+        currentBiome = mapBiomes.vazio;
+    }
+
+    document.getElementById('hud-map').innerText = currentBiome.name;
+
+    if (currentRound % 10 === 0) {
+        enemy.name = `🚨 ${currentBiome.boss} 🚨`;
+        enemy.maxHp = 100 + (currentRound * 22); 
+        enemy.atk = 10 + (currentRound * 2.8);
+    } else {
+        let randomMonster = currentBiome.monsters[Math.floor(Math.random() * currentBiome.monsters.length)];
+        enemy.name = `${randomMonster} (lv.${currentRound})`;
+        enemy.maxHp = 25 + (currentRound * 8);
+        enemy.atk = 4 + (currentRound * 1.4);
     }
     
     enemy.hp = enemy.maxHp;
@@ -78,7 +114,7 @@ function setupRound() {
     skillReady = true;
     document.getElementById('btn-skill').disabled = false;
     
-    logMessage(`--- Rodada ${currentRound}: Um ${enemy.name} apareceu! ---`);
+    logMessage(`--- Entrando em ${currentBiome.name} | Rodada ${currentRound} ---`);
     updateUI();
 }
 
@@ -248,3 +284,6 @@ function loadGame() {
         alert("Código inválido.");
     }
 }
+
+// TRAVA INICIAL: Garante que apenas o menu principal apareça ao abrir o navegador
+changeScreen('menu-screen');
