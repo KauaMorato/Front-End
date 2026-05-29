@@ -8,7 +8,8 @@ let player = {
     atk: 0,
     almas: 0,
     upgradesHp: 0,
-    upgradesAtk: 0
+    upgradesAtk: 0,
+    maxRoundReached: 1
 };
 
 const classTemplates = {
@@ -20,21 +21,25 @@ const classTemplates = {
 const mapBiomes = {
     floresta: {
         name: "🌲 Floresta Encantada",
+        startRound: 1,
         monsters: ["Fada Corrompida", "Grifo Jovem", "Lobo da Floresta", "Ent Ancião", "Aranha Gigante"],
         boss: "👑 Rei dos Grifos"
     },
     deserto: {
         name: "🏜️ Deserto Escaldante",
+        startRound: 101,
         monsters: ["Escorpião Rei", "Cobra Cascavel", "Hiena Faminta", "Múmia Esquecida", "Espírito da Areia"],
         boss: "👑 Verme Sombrio do Deserto"
     },
     neve: {
         name: "❄️ Picos Nevados",
+        startRound: 201,
         monsters: ["Urso Polar", "Boneco de Neve Assassino", "Lobo Invernal", "Golem de Gelo", "Yeti Jovem"],
         boss: "👑 Abominável Homem das Neves"
     },
     vazio: {
         name: "🌌 Vazio Cósmico (Infinito)",
+        startRound: 301,
         monsters: ["Aberração Estelar", "Devorador de Planetas", "Sombra do Caos"],
         boss: "👑 Titã do Vazio"
     }
@@ -60,7 +65,7 @@ function openLoadMenu() {
     document.getElementById('load-area').classList.toggle('hidden');
 }
 
-function startCombatLoop(className) {
+function selectClass(className) {
     player.classe = className;
     
     let base = classTemplates[className];
@@ -71,20 +76,24 @@ function startCombatLoop(className) {
     document.getElementById('hud-class').innerText = className;
     document.getElementById('hero-name').innerText = className;
     
-    currentRound = 1;
+    startCombatLoop(1);
+}
+
+function startCombatLoop(targetRound) {
+    currentRound = targetRound;
     document.getElementById('battle-log').innerHTML = "O combate vai começar...";
     
     setupRound();
     changeScreen('game-screen');
 }
 
-function selectClass(className) {
-    startCombatLoop(className);
-}
-
 function setupRound() {
     document.getElementById('hud-round').innerText = currentRound;
     
+    if (currentRound > player.maxRoundReached) {
+        player.maxRoundReached = currentRound;
+    }
+
     let currentBiome;
     if (currentRound <= 100) {
         currentBiome = mapBiomes.floresta;
@@ -99,7 +108,7 @@ function setupRound() {
     document.getElementById('hud-map').innerText = currentBiome.name;
 
     if (currentRound % 10 === 0) {
-        enemy.name = `🚨 ${currentBiome.boss} 🚨`;
+        enemy.name = ` ${currentBiome.boss} `;
         enemy.maxHp = 100 + (currentRound * 22); 
         enemy.atk = 10 + (currentRound * 2.8);
     } else {
@@ -110,7 +119,12 @@ function setupRound() {
     }
     
     enemy.hp = enemy.maxHp;
+    
+    let base = classTemplates[player.classe];
+    player.maxHp = base.hp + (player.upgradesHp * 20);
+    player.atk = base.atk + (player.upgradesAtk * 5);
     player.hp = player.maxHp; 
+    
     skillReady = true;
     document.getElementById('btn-skill').disabled = false;
     
@@ -215,7 +229,7 @@ function useSkill() {
 }
 
 // ==========================================
-// UPGRADES, REINICIALIZAÇÃO E SAVE
+// UPGRADES, REINICIALIZAÇÃO E SELEÇÃO DE MAPAS
 // ==========================================
 function winRound() {
     let almasGanhas = currentRound % 10 === 0 ? 20 : 3;
@@ -229,6 +243,7 @@ function winRound() {
 function gameOver() {
     if (isAutoAttacking) toggleAutoAttack();
     document.getElementById('go-round').innerText = currentRound;
+    document.getElementById('go-max-round').innerText = player.maxRoundReached;
     updateUI();
     changeScreen('gameover-screen');
 }
@@ -250,11 +265,38 @@ function buyUpgrade(type) {
 }
 
 function restartGame() {
-    if (player.classe) {
-        startCombatLoop(player.classe);
-    } else {
+    if (!player.classe) {
         changeScreen('class-screen');
+        return;
     }
+
+    const container = document.getElementById('map-buttons-container');
+    container.innerHTML = ""; 
+
+    const stages = [
+        { name: "🌲 Começar na Floresta (Rodada 1)", minRequired: 1, start: 1 },
+        { name: "🏜️ Pular para o Deserto (Rodada 101)", minRequired: 101, start: 101 },
+        { name: "❄️ Pular para a Neve (Rodada 201)", minRequired: 201, start: 201 },
+        { name: "🌌 Pular para o Vazio (Rodada 301)", minRequired: 301, start: 301 }
+    ];
+
+    stages.forEach(stage => {
+        let btn = document.createElement('button');
+        btn.innerText = stage.name;
+        
+        if (player.maxRoundReached >= stage.minRequired) {
+            btn.onclick = () => startCombatLoop(stage.start);
+        } else {
+            btn.disabled = true;
+            btn.innerText += " 🔒 (Bloqueado)";
+            btn.style.opacity = "0.3";
+            btn.style.cursor = "not-allowed";
+            btn.style.backgroundColor = "#29292e";
+        }
+        container.appendChild(btn);
+    });
+
+    changeScreen('map-selection-screen');
 }
 
 // ==========================================
@@ -264,7 +306,8 @@ function exportSave() {
     let saveData = {
         almas: player.almas,
         upgradesHp: player.upgradesHp,
-        upgradesAtk: player.upgradesAtk
+        upgradesAtk: player.upgradesAtk,
+        maxRoundReached: player.maxRoundReached
     };
     let stringSave = btoa(JSON.stringify(saveData));
     prompt("Copie seu código de salvamento:", stringSave);
@@ -277,7 +320,8 @@ function loadGame() {
         player.almas = decoded.almas;
         player.upgradesHp = decoded.upgradesHp || 0;
         player.upgradesAtk = decoded.upgradesAtk || 0;
-        alert("Upgrades permanentes carregados com sucesso!");
+        player.maxRoundReached = decoded.maxRoundReached || 1;
+        alert("Progresso e mapas carregados!");
         updateUI();
         changeScreen('class-screen');
     } catch(err) {
@@ -285,5 +329,5 @@ function loadGame() {
     }
 }
 
-// TRAVA INICIAL: Garante que apenas o menu principal apareça ao abrir o navegador
+// Inicializa no Menu
 changeScreen('menu-screen');

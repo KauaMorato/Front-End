@@ -46,7 +46,17 @@
         <button class="back-btn" onclick="changeScreen('menu-screen')">Voltar ao Menu</button>
     </div>
 
-    <!-- 3. TELA DE JOGO (BATALHA) -->
+    <!-- 3. TELA DE SELEÇÃO DE MAPAS DESBLOQUEADOS -->
+    <div id="map-selection-screen" class="screen hidden">
+        <h2>Escolha o Ponto de Partida</h2>
+        <p style="color: #aaa; margin-bottom: 20px;">Você manterá sua classe e seus upgrades permanentes.</p>
+        <div class="menu-buttons" id="map-buttons-container">
+            <!-- Gerado dinamicamente pelo JS -->
+        </div>
+        <button class="back-btn" onclick="changeScreen('menu-screen')">Voltar ao Menu</button>
+    </div>
+
+    <!-- 4. TELA DE JOGO (BATALHA) -->
     <div id="game-screen" class="screen hidden">
         <div class="hud">
             <div>Mapa: <span id="hud-map" style="color: #04d361; font-weight: bold;">Floresta</span></div>
@@ -76,9 +86,8 @@
         <div class="log" id="battle-log">O combate vai começar...</div>
     </div>
 
-    <!-- 4. TELA DE MORTE / MELHORIAS -->
+    <!-- 5. TELA DE MORTE / MELHORIAS -->
     <div id="gameover-screen" class="screen gameover-layout hidden">
-        <!-- Painel Esquerdo: Histórico de Upgrades -->
         <div class="upgrades-sidebar">
             <h3>Seus Upgrades</h3>
             <p>Vida Comprada: +<span id="stat-bought-hp">0</span></p>
@@ -87,10 +96,10 @@
             <p>Total de ✨ Almas: <span class="soul-count">0</span></p>
         </div>
 
-        <!-- Painel Direito: Ações de Compra e Menu -->
         <div class="main-gameover">
             <h2>Você Morreu!</h2>
             <p>Você chegou até a rodada <span id="go-round">0</span></p>
+            <p style="font-size: 0.9rem; color: #aaa;">Maior Rodada Alcançada: <span id="go-max-round" style="color: #04d361; font-weight: bold;">1</span></p>
             
             <div class="upgrades-section">
                 <h3>Loja de Melhorias Permanentes</h3>
