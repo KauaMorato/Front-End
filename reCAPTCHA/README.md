@@ -1,3 +1,6 @@
+# CAPTCHA mudou as normas de privacidade, código parou
+    Não vou arrumar, perda de tempo voltar atrás de projeto
+
 ## Fazendo um formulário teste para atribuir o reCAPTCHA
 20/05/2026
 
